@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agenda Planner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>📅 Agenda Planner</h1>
+    <div class="topbar-actions">
+      <button id="btn-export" class="btn ghost" title="Unduh cadangan JSON">Ekspor</button>
+      <label class="btn ghost" title="Impor dari JSON">Impor
+        <input type="file" id="file-import" accept="application/json" hidden>
+      </label>
+      <button id="btn-notif" class="btn ghost" title="Aktifkan pengingat browser">🔔 Pengingat</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel form-panel">
+      <h2 id="form-title">Tambah Agenda</h2>
+      <form id="agenda-form" autocomplete="off">
+        <input type="hidden" id="f-id">
+        <label>Judul
+          <input type="text" id="f-title" required maxlength="120" placeholder="Contoh: Rapat tim mingguan">
+        </label>
+        <div class="row">
+          <label>Tanggal
+            <input type="date" id="f-date" required>
+          </label>
+          <label>Waktu
+            <input type="time" id="f-time" required>
+          </label>
+        </div>
+        <div class="row">
+          <label>Kategori
+            <select id="f-category">
+              <option value="Khusus Praktikum">Khusus Praktikum</option>
+              <option value="Matakuliah">Matakuliah</option>
+              <option value="Agenda Pertemuan">Agenda Pertemuan</option>
+            </select>
+          </label>
+          <label>Prioritas
+            <select id="f-priority">
+              <option value="rendah">Rendah</option>
+              <option value="sedang" selected>Sedang</option>
+              <option value="tinggi">Tinggi</option>
+            </select>
+          </label>
+        </div>
+        <label>Status
+          <select id="f-status">
+            <option value="belum_dikerjakan" selected>Belum dikerjakan</option>
+            <option value="sedang_dikerjakan">Sedang dikerjakan</option>
+            <option value="selesai">Selesai</option>
+          </select>
+        </label>
+        <label>Lokasi
+          <input type="text" id="f-location" maxlength="120" placeholder="Opsional">
+        </label>
+        <label>Catatan
+          <textarea id="f-notes" rows="3" maxlength="500" placeholder="Opsional"></textarea>
+        </label>
+        <div class="row">
+          <label>Ulangi
+            <select id="f-repeat">
+              <option value="none">Tidak</option>
+              <option value="daily">Setiap hari</option>
+              <option value="weekly">Setiap minggu</option>
+              <option value="monthly">Setiap bulan</option>
+            </select>
+          </label>
+          <label>Ingatkan
+            <select id="f-remind">
+              <option value="0">Tepat waktu</option>
+              <option value="10" selected>10 menit sebelum</option>
+              <option value="30">30 menit sebelum</option>
+              <option value="60">1 jam sebelum</option>
+              <option value="1440">1 hari sebelum</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn primary" id="btn-save">Simpan</button>
+          <button type="button" class="btn ghost" id="btn-cancel" hidden>Batal</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel list-panel">
+      <div class="stats" id="stats"></div>
+
+      <div class="filters">
+        <input type="search" id="q" placeholder="Cari agenda…">
+        <select id="flt-range">
+          <option value="upcoming">Akan datang</option>
+          <option value="today">Hari ini</option>
+          <option value="week">7 hari ke depan</option>
+          <option value="month">Bulan ini</option>
+          <option value="overdue">Terlewat</option>
+          <option value="done">Selesai</option>
+          <option value="all">Semua</option>
+        </select>
+        <select id="flt-category"><option value="">Semua kategori</option></select>
+        <select id="flt-priority">
+          <option value="">Semua prioritas</option>
+          <option value="tinggi">Tinggi</option>
+          <option value="sedang">Sedang</option>
+          <option value="rendah">Rendah</option>
+        </select>
+      </div>
+
+      <ul id="list" class="agenda-list"></ul>
+      <p id="empty" class="empty" hidden>Belum ada agenda yang sesuai.</p>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
